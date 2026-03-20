@@ -3,15 +3,20 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-const cards = [
-  { id: 1, title: "Curated Spaces", desc: "Every corner is designed to minimize distraction and maximize serenity." },
-  { id: 2, title: "Natural Harmony", desc: "Seamlessly integrated with the surrounding old-growth forest." },
-  { id: 3, title: "Bespoke Wellness", desc: "Tailored therapeutic programs targeting deep physiological rest." },
-];
+import { useLanguageStore } from "@/store/useLanguageStore";
+import { dict } from "@/locales";
 
 export default function FeaturesLayer() {
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { lang } = useLanguageStore();
+  const t = dict[lang] || dict.ko;
+
+  const cards = [
+    { id: 1, title: t.feature1Title, desc: t.feature1Desc },
+    { id: 2, title: t.feature2Title, desc: t.feature2Desc },
+    { id: 3, title: t.feature3Title, desc: t.feature3Desc },
+  ];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -45,23 +50,21 @@ export default function FeaturesLayer() {
       });
     }, containerRef);
     return () => ctx.revert();
-  }, []);
+  }, [lang]);
 
   return (
     <section ref={containerRef} className="relative w-full bg-background pt-24 pb-[40vh]">
       <div className="max-w-6xl mx-auto px-6 relative">
         <div className="mb-24 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">The Essentials</h2>
-          <p className="text-xl mt-6 opacity-60 tracking-tight">What makes Zionsberg entirely unique.</p>
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">{t.featuresMain}</h2>
+          <p className="text-xl mt-6 opacity-60 tracking-tight">{t.featuresSub}</p>
         </div>
 
         {cards.map((card, i) => (
           <div 
             key={card.id} 
-            className="feature-card w-full h-[60vh] md:h-[70vh] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 flex flex-col justify-between relative shadow-2xl mb-8 origin-top"
+            className="feature-card w-full h-[60vh] md:h-[70vh] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 flex flex-col justify-between relative shadow-2xl mb-8 origin-top bg-foreground text-background"
             style={{
-              backgroundColor: i === 0 ? '#dadecd' : i === 1 ? '#a3b18a' : '#2d3748',
-              color: i === 2 ? '#ffffff' : '#1a1c19',
               zIndex: i
             }}
           >

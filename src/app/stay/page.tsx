@@ -1,27 +1,22 @@
 "use client";
-
-import { motion } from "framer-motion";
+import React from 'react';
+import { useLanguageStore } from "@/store/useLanguageStore";
+import { dict } from "@/locales";
 
 export default function StayPage() {
+  const { lang } = useLanguageStore();
+  const t = dict[lang] || dict.ko;
+
   return (
-    <div className="min-h-screen pt-32 px-6 flex flex-col items-center justify-center bg-background text-foreground">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center max-w-2xl"
-      >
-        <span className="text-primary text-sm tracking-[0.2em] font-medium uppercase mb-4 block">
-          Accommodation
-        </span>
-        <h1 className="text-4xl md:text-5xl font-light tracking-widest uppercase mb-8">
-          Stay at Zionsberg
-        </h1>
-        <p className="text-lg font-light tracking-widest leading-relaxed opacity-80">
-          A collection of private villas nestled in nature, designed to provide profound rest and relaxation.
-          (Detailed gallery and room information coming soon...)
+    <div className="min-h-screen pt-32 px-6 md:px-24 bg-background text-foreground flex flex-col items-center">
+      <div className="w-full max-w-5xl mx-auto">
+        <span className="text-primary text-sm font-bold tracking-[0.2em] uppercase mb-6 block">Accommodation</span>
+        <h1 className="text-6xl md:text-[8rem] font-bold tracking-tighter leading-none mb-12 uppercase">{t.stay}</h1>
+        <p className="text-2xl md:text-4xl font-light opacity-80 leading-relaxed mb-auto pb-32">
+          {t.stayTitle}<br/><br/>
+          {t.stayDesc}
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }
