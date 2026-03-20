@@ -9,6 +9,7 @@ import { dict } from "@/locales";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -61,16 +62,26 @@ export default function Navigation() {
               {link.name}
             </Link>
           ))}
-          <div className="relative group">
-            <button className="flex items-center gap-2 border border-foreground/20 rounded-full px-4 py-1.5 text-xs font-bold tracking-widest uppercase bg-transparent hover:bg-foreground hover:text-background transition-colors duration-300 pointer-events-auto">
+          <div className="relative" onMouseLeave={() => setLangOpen(false)}>
+            <button 
+              onClick={() => setLangOpen(!langOpen)}
+              className="flex items-center gap-2 border border-foreground/20 rounded-full px-4 py-1.5 text-xs font-bold tracking-widest uppercase bg-transparent hover:bg-foreground hover:text-background transition-colors duration-300 pointer-events-auto"
+            >
               {lang === 'ko' ? 'KR' : lang === 'en' ? 'EN' : 'DE'}
             </button>
-            <div className="absolute top-full left-0 mt-2 w-full min-w-[3rem] flex flex-col bg-background border border-foreground/10 rounded-xl overflow-hidden shadow-lg opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50">
+            <div 
+              className={`absolute top-full left-0 mt-2 w-full min-w-[3.5rem] flex flex-col bg-background border border-foreground/10 rounded-xl overflow-hidden shadow-lg transition-all duration-300 z-[100] ${
+                langOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"
+              }`}
+            >
               {(['ko', 'en', 'de'] as Language[]).filter(l => l !== lang).map((l) => (
                 <button
                   key={l}
-                  onClick={() => setLang(l)}
-                  className="px-4 py-2 text-xs font-bold tracking-widest uppercase hover:bg-foreground/5 text-center text-foreground transition-colors"
+                  onClick={() => {
+                    setLang(l);
+                    setLangOpen(false);
+                  }}
+                  className="px-4 py-2 text-xs font-bold tracking-widest uppercase hover:bg-foreground hover:text-background text-center text-foreground transition-colors"
                 >
                   {l === 'ko' ? 'KR' : l === 'en' ? 'EN' : 'DE'}
                 </button>
