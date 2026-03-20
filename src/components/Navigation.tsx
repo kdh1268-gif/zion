@@ -62,7 +62,15 @@ export default function Navigation() {
               {link.name}
             </Link>
           ))}
-          <div className="relative" onMouseLeave={() => setLangOpen(false)}>
+          {/* Invisible Overlay to close dropdown when clicking outside */}
+          {langOpen && (
+            <div 
+              className="fixed inset-0 z-40" 
+              onClick={() => setLangOpen(false)}
+            />
+          )}
+          
+          <div className="relative z-50">
             <button 
               onClick={() => setLangOpen(!langOpen)}
               className="flex items-center gap-2 border border-foreground/20 rounded-full px-4 py-1.5 text-xs font-bold tracking-widest uppercase bg-transparent hover:bg-foreground hover:text-background transition-colors duration-300 pointer-events-auto"
