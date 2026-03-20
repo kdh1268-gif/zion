@@ -46,7 +46,7 @@ export default function JournalPage() {
 
       <div className="w-full max-w-5xl flex flex-col border-t border-foreground/10 pb-32">
         {newsItems.map((item, index) => (
-          <Link href={`/journal/${item.id}`} key={item.id}>
+          <Link href={`/journal/post`} key={item.id}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
